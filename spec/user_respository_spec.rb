@@ -7,7 +7,9 @@ RSpec.describe Hipmost::UserRepository do
 
     expect(repo.size).to eq(2)
 
-    expect(repo[564740]).to be_a(Hipmost::UserRepository::User)
+    user = repo[564740]
+    expect(user).to be_a(Hipmost::UserRepository::User)
+    expect(user.name).to eq("Jeff Burns")
   end
 
   let(:data) do
