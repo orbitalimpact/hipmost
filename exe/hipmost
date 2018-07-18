@@ -8,7 +8,14 @@ require "hipmost"
 
 options = { path: "./data" }
 OptionParser.new do |opts|
-  opts.banner = "Usage: hipmost [options] [rooms...]"
+  opts.banner = <<-BANNER
+    Usage: hipmost [options] [rooms...]
+
+    [rooms] must be at least one pair composed by "Hipchat channel name" and "Mattermost team":"Mattermost channel"
+
+    Example: hipmost Geneal Team:"Town Center"
+
+  BANNER
 
   opts.on("-p", "--path [PATH]", 'Data path (Default: "./data")') do |p|
     options[:path] = p
