@@ -1,0 +1,31 @@
+#!/usr/bin/env ruby
+$LOAD_PATH << File.expand_path("../../lib", __FILE__)
+require "rubygems" if RUBY_VERSION < "1.9"
+
+
+require 'optparse'
+require "hipmost"
+
+options = { path: "./data" }
+OptionParser.new do |opts|
+  opts.banner = "Usage: hipmost [options] [rooms...]"
+
+  opts.on("-p", "--path [PATH]", 'Data path (Default: "./data")') do |p|
+    options[:path] = p
+  end
+
+  opts.on("-v", "--[no-]verbose", "Run verbosely") do |v|
+    options[:verbose] = v
+  end
+end.parse!
+
+
+rooms      = ARGV
+rooms_size = rooms.size
+
+if rooms_size.zero? || (rooms_size % 2).nonzero?
+  puts "Need a pair of rooms to migrate"
+  exit 1
+end
+
+exit Hipmost::CLI.run(options.merge(rooms: rooms))
