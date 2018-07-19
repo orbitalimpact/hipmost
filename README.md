@@ -21,10 +21,11 @@ Eventually, it might be this:
 
     [rooms] must be a pair composed by "Hipchat channel name" and "Mattermost team":"Mattermost channel"
 
-    Example: hipmost Geneal Team:"Town Center"
+    Example: hipmost General Team:"Town Center"
+    Another example: hipmost -p data_folder "Orbital Impact" "Orbital Impact":"General"
 
-    -p, --path [PATH]                Data path (Default: "./data")
-    -v, --[no-]verbose               Run verbose
+    -p, --path [PATH]     Path to Hipchat data folder (Default: "./data")
+    -v, --[no-]verbose    Run verbosely
 
 ## Contributing
 
