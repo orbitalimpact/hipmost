@@ -23,7 +23,7 @@ OptionParser.new do |opts|
   end
 
   opts.on("-v", "--[no-]verbose", "Run verbosely") do |v|
-    options[:verbose] = v
+    options[:verbose] = true
   end
 end.parse!
 

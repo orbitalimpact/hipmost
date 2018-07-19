@@ -28,10 +28,21 @@ module Hipmost
         end.uniq
       end
 
-      def direct_posts(file)
+      def direct_posts(file, verbose)
+        i = 1 if verbose
+
         Dir[$path.join("users", "**", "*.json")].each do |file_path|
+          puts "Opening 1-on-1 room at #{file_path}..." if verbose
           json = JSON.parse(File.read(file_path))
+          puts "Successfully parsed file at #{file_path}" if verbose
+
+          puts "Examining messages in this file..." if verbose
           json.each do |message|
+            if verbose
+              print "On post #{i}\r"
+              i += 1
+            end
+
             msg       = message["PrivateUserMessage"]
             sender    = users[msg["sender"]["id"]]
             receiver  = users[msg["receiver"]["id"]]
@@ -41,6 +52,11 @@ module Hipmost
             members = [ sender.username, receiver.username ] .sort
 
             file.puts(%[{ "type": "direct_post", "direct_post": { "channel_members": #{members.inspect}, "user": "#{sender.username}", "message": "#{message}", "create_at": "#{create_at}" } }])
+          end
+
+          if verbose
+            print "\n"
+            puts "Successfully wrote data for that 1-on-1 room\n\n"
           end
         end
       end
