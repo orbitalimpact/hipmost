@@ -6,6 +6,13 @@ Mattermost
 
 ## Installation
 
+For now:
+
+    $ gem install specific_install
+    $ gem specific_install -l https://gitlab.orbitalimpact.com/gabrielrios/hipmost.git
+
+Eventually, it might be this:
+
     $ gem install hipmost
 
 ## Usage
@@ -25,7 +32,7 @@ Bug reports and pull requests are welcome. This project is intended to be a safe
 
 ## License
 
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+The gem is available as open source under the terms of the [MIT License.](https://opensource.org/licenses/MIT)
 
 ## Code of Conduct
 
