@@ -1,5 +1,5 @@
 # The Ruby Community Conduct Guideline
----
+
 This document provides community guidelines for a safe, respectful, productive, and collaborative place for any person who is willing to contribute to the Ruby community. It applies to all "collaborative space," which is defined as community communications channels (such as mailing lists, submitted patches, commit comments, etc.).
 
 - Participants will be tolerant of opposing views.
