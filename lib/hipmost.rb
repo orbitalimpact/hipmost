@@ -73,6 +73,7 @@ module Hipmost
 
         puts "Writing 1-on-1 room members..." if @verbose
         Hipchat.direct_channels.each do |members|
+          puts members.inspect if @verbose
           jsonl.puts(%[{ "type": "direct_channel", "direct_channel": { "members": #{members.inspect} }}])
         end
 
