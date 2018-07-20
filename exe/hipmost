@@ -13,16 +13,17 @@ OptionParser.new do |opts|
 
     [rooms] must be at least one pair composed by "Hipchat channel name" and "Mattermost team":"Mattermost channel"
 
-    Example: hipmost Geneal Team:"Town Center"
+    Example: hipmost General Team:"Town Center"
+    Another example: hipmost -p data_folder "Orbital Impact" "Orbital Impact":"General"
 
   BANNER
 
-  opts.on("-p", "--path [PATH]", 'Data path (Default: "./data")') do |p|
+  opts.on("-p", "--path [PATH]", 'Path to Hipchat data folder (Default: "./data")') do |p|
     options[:path] = p
   end
 
   opts.on("-v", "--[no-]verbose", "Run verbosely") do |v|
-    options[:verbose] = v
+    options[:verbose] = true
   end
 end.parse!
 
