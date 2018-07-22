@@ -13,7 +13,7 @@ module Hipmost
       end
 
       def rooms
-        @rooms ||= RoomRepository.load_from($path)
+        @rooms ||= RoomRepository.new($path).tap(&:load)
       end
 
       def direct_channels
@@ -37,6 +37,7 @@ module Hipmost
           puts "Successfully parsed file at #{file_path}" if verbose
 
           puts "Examining messages in this file..." if verbose
+
           json.each do |message|
             if verbose
               print "On post #{i}\r"

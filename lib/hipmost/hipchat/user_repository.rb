@@ -7,7 +7,7 @@ module Hipmost
       attr_accessor :users
       extend Forwardable
 
-      def_delegators :@users, :size, :[], :select
+      def_delegators :@users, :size, :[], :select, :each
 
       def self.load_from(path)
         new(path).tap(&:load)
@@ -16,6 +16,7 @@ module Hipmost
       def initialize(path)
         @path  = Pathname.new(path).join("users.json")
         @users = {}
+        @name_index = {}
       end
 
       def load(data = file_data)
@@ -24,6 +25,7 @@ module Hipmost
         json.each do |user_obj|
           user = user_obj["User"]
           @users[user["id"]] = User.new(user)
+          @name_index[user.username] = room["id"]
         end
       end
 
