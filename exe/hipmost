@@ -27,13 +27,6 @@ OptionParser.new do |opts|
   end
 end.parse!
 
+command = ARGV.shift
 
-rooms      = ARGV
-rooms_size = rooms.size
-
-if rooms_size.zero? || (rooms_size % 2).nonzero?
-  puts "Need a pair of rooms to migrate"
-  exit 1
-end
-
-exit Hipmost::CLI.run(options.merge(rooms: rooms))
+exit Hipmost::CLI.run(command, ARGV, options)

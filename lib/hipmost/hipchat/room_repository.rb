@@ -8,7 +8,7 @@ module Hipmost
       attr_accessor :rooms, :name_index
       extend Forwardable
 
-      def_delegators :@rooms, :size, :[], :select
+      def_delegators :@rooms, :size, :[], :select, :each
 
       def self.load_from(path)
         new(path).tap(&:load)
