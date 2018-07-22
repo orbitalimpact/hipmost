@@ -9,12 +9,22 @@ require "hipmost"
 options = { path: "./data" }
 OptionParser.new do |opts|
   opts.banner = <<-BANNER
-    Usage: hipmost [options] [rooms...]
+    Usage: hipmost [options] [command]
+
+    Commands
+
+    rooms [import|list| [rooms] - Import or list Hipchat Rooms
 
     [rooms] must be at least one pair composed by "Hipchat channel name" and "Mattermost team":"Mattermost channel"
 
-    Example: hipmost General Team:"Town Center"
-    Another example: hipmost -p data_folder "Orbital Impact" "Orbital Impact":"General"
+    --------
+
+    private [import|list]  - Import or List Private chats
+
+    --------
+
+    Example: hipmost rooms General Team:"Town Center"
+    Another example: hipmost -p data_folder rooms "Orbital Impact" "Orbital Impact":"General"
 
   BANNER
 
