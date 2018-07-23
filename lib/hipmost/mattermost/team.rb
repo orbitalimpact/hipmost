@@ -14,7 +14,7 @@ module Hipmost
         if display_name == "Orbital Impact"
           "oi"
         else
-          name
+          @name
         end
       end
     end
