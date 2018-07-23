@@ -14,7 +14,7 @@ module Hipmost
         if display_name == "Orbital Impact"
           "oi"
         else
-          @name
+          @display_name.gsub(/\s/, "-").downcase
         end
       end
     end
