@@ -26,7 +26,7 @@ module Hipmost
           user                           = user_obj["User"]
           user_obj                       = User.new(user)
           @users[user["id"]]             = user_obj
-          @name_index[user_obj.username] = room["id"]
+          @name_index[user_obj.username] = user["id"]
         end
       end
 
