@@ -23,9 +23,10 @@ module Hipmost
         json = JSON.load(data)
 
         json.each do |user_obj|
-          user = user_obj["User"]
-          @users[user["id"]] = User.new(user)
-          @name_index[user.username] = room["id"]
+          user                           = user_obj["User"]
+          user_obj                       = User.new(user)
+          @users[user["id"]]             = user_obj
+          @name_index[user_obj.username] = room["id"]
         end
       end
 
