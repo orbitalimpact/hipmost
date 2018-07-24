@@ -102,10 +102,10 @@ module Hipmost
             puts "Mattermost team & channel are: #{mattermost_room}"
           end
 
-          team, room = mattermost_room.split(":")
-          team       = Mattermost::Team.new(team)
-          room       = Hipchat.rooms.find_by_name(hipchat_room)
-          channel    = Mattermost::Channel.from_hipchat(room, team: team)
+          team, channel_name = mattermost_room.split(":")
+          team               = Mattermost::Team.new(team)
+          room               = Hipchat.rooms.find_by_name(hipchat_room)
+          channel            = Mattermost::Channel.from_hipchat(room, name: channel_name, team: team)
 
           room.team    = team
           room.channel = channel

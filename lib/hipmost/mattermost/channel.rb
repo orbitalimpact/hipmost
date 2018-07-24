@@ -1,8 +1,8 @@
 module Hipmost
   module Mattermost
     class Channel
-      def self.from_hipchat(room, team: )
-        new(name:          room.name,
+      def self.from_hipchat(room, name:, team: )
+        new(name:          name,
             type:          room.private? ? "P" : "O",
             display_name:  room.display_name,
             header:        room.topic,
