@@ -10,7 +10,7 @@ module Hipmost
       end
 
       def initialize(name:, team:, display_name:, type:, header:)
-        @name         = name
+        @name         = name.downcase.gsub(/\s/, "-")
         @team         = team
         @display_name = display_name
         @type         = type
