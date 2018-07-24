@@ -48,7 +48,7 @@ module Hipmost
             sender    = users[msg["sender"]["id"]]
             receiver  = users[msg["receiver"]["id"]]
             message   = msg["message"]
-            create_at = DateTime.strptime(msg["timestamp"]).to_time.to_i
+            create_at = DateTime.strptime(msg["timestamp"]).to_time.to_i*1000
 
             members = [ sender.username, receiver.username ] .sort
 
