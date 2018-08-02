@@ -35,9 +35,12 @@ module Hipmost
       end
 
       def file_data
-        File.read(@path)
+        if File.exists? @path
+          File.read(@path)
+        else
+          abort "./data does not exist; did you forget to specify a path to the data?"
+        end
       end
-
     end
   end
 end
