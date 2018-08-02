@@ -27,6 +27,7 @@ module Hipmost
         json.each do |post_obj|
           next if post_obj.key?("NotificationMessage")
           post = post_obj["UserMessage"]
+          puts post if @verbose
           @posts << Post.new(post, @room)
         end
       end
