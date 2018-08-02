@@ -3,12 +3,12 @@ module Hipmost
     class Room
       def initialize(path:, verbose: false)
         $path    = Pathname.new(path).expand_path
-        @outpath = $path.join("..", "data.jsonl").expand_path
         @verbose = verbose
       end
 
       def run(args)
         subcommand = args.shift
+        @outpath = $path.join("..", "#{args[0]}.jsonl").expand_path
 
         if ["list", "import"].include?(subcommand)
         else

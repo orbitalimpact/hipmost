@@ -3,7 +3,7 @@ module Hipmost
     class Private
       def initialize(path:, verbose: false)
         $path    = Pathname.new(path).expand_path
-        @outpath = $path.join("..", "data.jsonl").expand_path
+        @outpath = $path.join("..", "Private Chats.jsonl").expand_path
         @verbose = verbose
       end
 
