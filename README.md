@@ -17,12 +17,28 @@ Eventually, it might be this:
 
 ## Usage
 
-    Usage: hipmost [options] [rooms...]
+    Usage: hipmost [options] [command]
 
-    [rooms] must be a pair composed by "Hipchat channel name" and "Mattermost team":"Mattermost channel"
+    Commands:
 
-    Example: hipmost General Team:"Town Center"
-    Another example: hipmost -p data_folder "Orbital Impact" "Orbital Impact":"General"
+    public (AKA, room or rooms)
+    Form: public [import|list] [rooms] - Import or list public Hipchat rooms
+
+    [rooms] must be at least one pair composed by "Hipchat channel name" and "Mattermost team":"Mattermost channel"
+    The Mattermost team or channel can be the URL endpoint, such as "town-square", or the channel name, such as "General"
+
+    --------
+
+    private (AKA, direct)
+    Form: private [import|list]  - Import or list private chats
+
+    --------
+
+    Examples:
+    $ hipmost room import "Orbital Impact" "Orbital Impact":"General"
+    $ hipmost public import "Orbital Impact" "Orbital Impact":"General" -p data_folder
+    $ hipmost private list
+    $ hipmost -v rooms import "Orbital Impact" "Orbital Impact":"General"
 
     -p, --path [PATH]     Path to Hipchat data folder (Default: "./data")
     -v, --[no-]verbose    Run verbosely

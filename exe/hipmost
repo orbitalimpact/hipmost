@@ -11,20 +11,26 @@ OptionParser.new do |opts|
   opts.banner = <<-BANNER
     Usage: hipmost [options] [command]
 
-    Commands
+    Commands:
 
-    rooms [import|list| [rooms] - Import or list Hipchat Rooms
+    public (AKA, room or rooms)
+    Form: public [import|list] [rooms] - Import or list public Hipchat rooms
 
     [rooms] must be at least one pair composed by "Hipchat channel name" and "Mattermost team":"Mattermost channel"
+    The Mattermost team or channel can be the URL endpoint, such as "town-square", or the channel name, such as "General"
 
     --------
 
-    private [import|list]  - Import or List Private chats
+    private (AKA, direct)
+    Form: private [import|list]  - Import or list private chats
 
     --------
 
-    Example: hipmost rooms General Team:"Town Center"
-    Another example: hipmost -p data_folder rooms "Orbital Impact" "Orbital Impact":"General"
+    Examples:
+    $ hipmost room import "Orbital Impact" "Orbital Impact":"General"
+    $ hipmost public import "Orbital Impact" "Orbital Impact":"General" -p data_folder
+    $ hipmost private list
+    $ hipmost -v rooms import "Orbital Impact" "Orbital Impact":"General"
 
   BANNER
 
