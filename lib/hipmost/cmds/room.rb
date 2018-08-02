@@ -12,7 +12,7 @@ module Hipmost
 
         if ["list", "import"].include?(subcommand)
         else
-          puts "Command invalid for room, must be import or list"
+          puts "Command invalid for `public`; must be `import` or `list`"
           exit 1
         end
 
@@ -20,7 +20,7 @@ module Hipmost
       end
 
       def list(_args)
-        puts "Listing rooms" if @verbose
+        puts "Listing rooms..." if @verbose
         Hipchat.rooms.each do |_,room|
           puts room.display_name
         end

@@ -12,7 +12,7 @@ module Hipmost
 
         if ["list", "import"].include?(subcommand)
         else
-          puts "Command invalid for room, must be import or list"
+          puts "Command invalid for `private`, must be `import` or `list`"
           exit 1
         end
 
