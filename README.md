@@ -19,15 +19,15 @@ Eventually, it might be this:
 
     Commands:
 
-    public (AKA, room or rooms)
-    Form: public [import|list] [rooms] - Import or list public Hipchat rooms
+    public (AKA: `room' or `rooms')
+    Form: public [import|list] [room names] - Import or list public Hipchat rooms
 
-    [rooms] must be at least one pair composed by "Hipchat channel name" and "Mattermost team":"Mattermost channel"
-    The Mattermost team or channel can be the URL endpoint, such as "town-square", or the channel name, such as "General"
+    [room names] must be at least one pair composed by "Hipchat room name" and "Mattermost team":"Mattermost channel".
+    The Mattermost team or channel can be the part visible in the URL path, such as "town-square", or it can be the plain-English name, such as "General"
 
     --------
 
-    private (AKA, direct)
+    private (AKA: `direct')
     Form: private [import|list]  - Import or list private chats
 
     --------
