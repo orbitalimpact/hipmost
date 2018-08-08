@@ -48,6 +48,7 @@ The following are some bugs that we are presently aware of, although please do n
 - Verbose mode could be better (i.e., more verbose).
 - The CLI could perhaps become easier and more intuitive.
 - Documentation should be added beyond simple usage.
+- If a file is generated whose name conflicts with an already existing file, then the already existing file will be overwritten.
 
 ## Contributing
 
