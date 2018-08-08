@@ -13,7 +13,7 @@ module Hipmost
       attr_reader :team, :channel, :sender
 
       def to_jsonl
-        %[{ "type": "post", "post": { "team": "#{team.name}", "channel": "#{channel.name}", "user": "#{sender.username}", "message": "#@message", "create_at": #{@created_at.to_time.to_i*1000} } }]
+        %[{ "type": "post", "post": { "team": "#{team.name}", "channel": "#{channel.name}", "user": "#{sender.username}", "message": "#{@message.gsub("\"", "\\\"")}", "create_at": #{@created_at.to_time.to_i*1000} } }]
       end
     end
   end
