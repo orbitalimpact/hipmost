@@ -55,7 +55,7 @@ The following are some bugs that we are presently aware of, although please do n
 Error importing post. User with username "john_doe" could not be found., SqlUserStore.GetByUsername: We couldn't find an existing account matching your username for this team. This team may require an invite from the team owner to join., sql: no rows in result set
 ```
 
-The current workaround is to manually create the missing user(s) in the system by hand.
+The current workaround is to manually [create the missing user(s)](https://docs.mattermost.com/administration/command-line-tools.html#mattermost-user-create) in the system by hand.
 
 ## Contributing
 
