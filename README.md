@@ -42,7 +42,9 @@ Eventually, it might be this:
     -v, --[no-]verbose    Run verbosely
 
 ## Known Bugs
-The following are some bugs that we are presently aware of, although please do not assume that this list encompasses *all* of the bugs which you may encounter:
+Unfortunately, there are a number of problems which exist that we are presently aware of. We have worked on this project in our spare time, in between work on actual projects. Since we worked on it for free and with our specific data in mind, we have accrued the following bugs and have been unable to devote the time and effort necessary to properly fix all of them (although, some of these bugs have workarounds). We would like to remedy this, yet we could certainly use help in the way of patches or donations. If this project has been helpful to your team or you'd like to improve it to help your team migrate, then please consider submitting patches or donating money so that we can devote more time to this project.
+
+Of course, please do not assume that this list encompasses *all* of the bugs which you may encounter:
 
 - Messages which are of the type `GuestAccessMessage` or `NotificationMessage` are skipped; only `UserMessage`'s and `PrivateUserMessage`'s are processed.
 - Verbose mode could be better (i.e., more verbose).
