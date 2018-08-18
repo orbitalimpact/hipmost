@@ -51,7 +51,8 @@ Of course, please do not assume that this list encompasses *all* of the bugs whi
 - The CLI could perhaps become easier and more intuitive.
 - Documentation should be added beyond simple usage.
 - If a file is generated whose name conflicts with an already existing file, then the already existing file will be overwritten.
-- Sometimes [user objects](https://docs.mattermost.com/deployment/bulk-loading.html#user-object) don't get generated. We're not exactly sure why this happens; unfortunately, it causes the validator to get upset and say something like: 
+    - This may be considered a feature, depending on your opinion and use case.
+- Sometimes [user objects](https://docs.mattermost.com/deployment/bulk-loading.html#user-object) don't get generated. We're not exactly sure why this happens; unfortunately, it causes the validator to get upset and say something like: `Error importing post. User with username "john_doe" could not be found., SqlUserStore.GetByUsername: We couldn't find an existing account matching your username for this team.`
 
 ```
 Error importing post. User with username "john_doe" could not be found., SqlUserStore.GetByUsername: We couldn't find an existing account matching your username for this team. This team may require an invite from the team owner to join., sql: no rows in result set
