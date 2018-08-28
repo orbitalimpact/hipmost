@@ -1,5 +1,7 @@
 # Hipmost
 
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=AYNCCNVFYPKXW)
+
 Hipmost is a tool to migrate your Hipchat history to Mattermost. It parses your Hipchat export and generates a file to be imported on a Mattermost server. After generating this file, please see [the Mattermost documentation](https://docs.mattermost.com/deployment/bulk-loading.html) for how to import it on your server.
 
 ## Installation
@@ -73,3 +75,8 @@ The gem is available as open source under the terms of the [MIT License.](https:
 ## Code of Conduct
 
 Everyone interacting in the Hipmost project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct.](./CODE_OF_CONDUCT.md)
+
+## Donation
+If this project has helped you or your team, a donation would be appreciated and will help keep the project alive :)
+
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=AYNCCNVFYPKXW)
