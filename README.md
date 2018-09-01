@@ -9,7 +9,7 @@ Hipmost is a tool to migrate your Hipchat history to Mattermost. It parses your 
 For now:
 
     $ gem install specific_install
-    $ gem specific_install -l https://gitlab.orbitalimpact.com/gabrielrios/hipmost.git
+    $ gem specific_install -l https://github.com/orbitalimpact/hipmost.git
 
 Eventually, it might be this:
 
