@@ -48,7 +48,7 @@ Unfortunately, there are a number of problems which exist that we are presently 
 
 Of course, please do not assume that this list encompasses *all* of the bugs which you may encounter:
 
-- Messages which are of the type `GuestAccessMessage` or `NotificationMessage` are skipped; only `UserMessage`'s and `PrivateUserMessage`'s are processed.
+- Messages which are of the type `TopicRoomMessage`, `ArchiveRoomMessage`, `GuestAccessMessage` or `NotificationMessage` are skipped; only `UserMessage`'s and `PrivateUserMessage`'s are processed.
 - Verbose mode could be better (i.e., more verbose).
 - The CLI could perhaps become easier and more intuitive.
 - Documentation should be added beyond simple usage.
