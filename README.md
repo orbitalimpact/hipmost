@@ -58,7 +58,7 @@ Of course, please do not assume that this list encompasses *all* of the bugs whi
 
     - The current workaround is to manually [create the missing user(s)](https://docs.mattermost.com/administration/command-line-tools.html#mattermost-user-create) in the system by hand.
 
-- If a user object *is* generated, but a user's username is now different than what it used to be in Hipchat, Mattermost may complain them having about an insufficient password. E.g.: `User.IsValid: model.user.is_valid.pwd_lowercase_uppercase_number_symbol.app_error`
+- If a user object *is* generated, but a user's username is now different than what it used to be in Hipchat, Mattermost may complain about them having an insufficient password. E.g.: `User.IsValid: model.user.is_valid.pwd_lowercase_uppercase_number_symbol.app_error`
     - A workaround is to remove that user object or to modify the user object to have the right username.
 - Some posts may contain old usernames, which cannot be caught by the validator.
     - A workaround is to use `sed` or a text editor to find & replace the occurrences of the old username with the new one.
