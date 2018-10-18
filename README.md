@@ -6,14 +6,11 @@ Hipmost is a tool to migrate your Hipchat history to Mattermost. It parses your 
 
 ## Installation
 
-For now:
-
-    $ gem install specific_install
-    $ gem specific_install -l https://github.com/orbitalimpact/hipmost.git
-
-Eventually, it might be this:
-
     $ gem install hipmost
+
+## Getting started
+
+See [HOWTO.md](./HOWTO.md) for a step-by-step guide for the entire process. It covers everything from how to get your data from Hipchat, and finally, how to get that data into Mattermost.
 
 ## Usage
 
@@ -49,6 +46,8 @@ See the [KNOWN-BUGS.md](./KNOWN-BUGS.md) file for discussion of known problems, 
 ## Contributing
 
 Bug reports and pull requests are welcome. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Ruby code of conduct.](https://www.ruby-lang.org/en/conduct/)
+
+Also, [here is a great reference for Hipchat's data format](https://confluence.atlassian.com/hipchatkb/exporting-from-hipchat-server-or-data-center-for-data-portability-950821555.html) and [here is a great reference for how Mattermost's data format.](https://docs.mattermost.com/deployment/bulk-loading.html#data-format) These are highly useful for aspiring contributors.
 
 ## License
 
