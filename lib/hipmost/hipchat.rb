@@ -21,7 +21,12 @@ module Hipmost
         Dir[$path.join("users", "**", "*.json")].flat_map do |file_path|
           json = JSON.parse(File.read(file_path))
           json.map do |message|
-            msg      = message["PrivateUserMessage"]
+            if message.is_a?(Array)
+              msg    = message.first["PrivateUserMessage"]
+            else
+              msg    = message["PrivateUserMessage"]
+            end
+
             sender   = users[msg["sender"]["id"]]
             receiver = users[msg["receiver"]["id"]]
             [sender.username, receiver.username].sort
