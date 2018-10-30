@@ -30,7 +30,7 @@ module Hipmost
           next if post_obj.key?("ArchiveRoomMessage")
           next if post_obj.key?("TopicRoomMessage")          
           post = post_obj["UserMessage"]
-          @posts << Post.new(post, @room)
+          @posts << Post.new(post, @room, @room.private?)
         end
       end
 
