@@ -28,7 +28,8 @@ module Hipmost
     class Room
       def initialize(attrs)
         @id           = attrs["id"]
-        @name         = attrs["name"].gsub(/\s/, "-").downcase
+        @name         = attrs["name"].gsub(/\s/, "-")
+                                     .gsub("[", "").gsub("]", "").downcase
         @display_name = attrs["name"]
         @topic        = attrs["topic"]
         @attrs        = attrs
