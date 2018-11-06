@@ -31,14 +31,24 @@ See [HOWTO.md](./HOWTO.md) for a step-by-step guide for the entire process. It c
 
     --------
 
+    users
+    Form: users - Exports the list of users to Users.jsonl This helps fix user not found errors during import.  This is especially important if your users are no always members of the rooms.
+    
+    --------
+
     Examples:
     $ hipmost room import "Orbital Impact" "Orbital Impact":"General"
     $ hipmost public import "Orbital Impact" "Orbital Impact":"General" -p data_folder
     $ hipmost private list
+    $ hipmost users
     $ hipmost -v rooms import "Orbital Impact" "Orbital Impact":"General"
 
     -p, --path [PATH]     Path to Hipchat data folder (Default: "./data")
     -v, --[no-]verbose    Run verbosely
+
+## Generating Commands
+The file Commands.ods can be used to generate your import commands.
+
 
 ## Known Bugs
 See the [KNOWN-BUGS.md](./KNOWN-BUGS.md) file for discussion of known problems, workarounds, and potential improvements. This is also a good place to start if you're interested in contributing.

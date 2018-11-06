@@ -8,6 +8,8 @@ module Hipmost
   class CLI
     def self.run(command, args, options)
       case command.to_sym
+      when :users
+        Hipmost::Cmds::Users.new(**options).run(args)
       when :public, :room, :rooms
         Hipmost::Cmds::Room.new(**options).run(args)
       when :private, :direct
