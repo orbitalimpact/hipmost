@@ -41,7 +41,11 @@ module Hipmost
       end
 
       def users
-        @users ||= attrs["members"].map{|uid| Hipchat.users[uid] }
+        if not attrs["members"].first.is_a? Integer
+          @users ||= [ Hipchat.users[attrs["members"].first["id"]] ]
+        else
+          @users ||= attrs["members"].map{|uid| Hipchat.users[uid] }
+        end
       end
 
       def posts
