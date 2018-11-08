@@ -8,7 +8,11 @@ module Hipmost
 
       def run(args)
         subcommand = args.shift
-        @outpath = $path.join("..", "#{args[0]}.jsonl").expand_path
+
+        if subcommand == "import"
+       	  filename = args[0].gsub('/', '-')
+          @outpath = $path.join("..", "#{filename}.jsonl").expand_path
+        end
 
         if ["list", "import"].include?(subcommand)
         else

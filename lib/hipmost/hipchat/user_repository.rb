@@ -54,7 +54,7 @@ module Hipmost
         end
 
         def username
-          attrs["mention_name"]
+          attrs["mention_name"].downcase
         end
 
         def email
