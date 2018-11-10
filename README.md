@@ -39,7 +39,8 @@ See [HOWTO.md](./HOWTO.md) for a step-by-step guide for the entire process. It c
     Examples:
     $ hipmost room import "Orbital Impact" "Orbital Impact":"General"
     $ hipmost public import "Orbital Impact" "Orbital Impact":"General" -p data_folder
-    $ hipmost private list
+    $ hipmost private list      # List all private chat rooms
+    $ hipmost private import    # Import all private chats
     $ hipmost users
     $ hipmost -v rooms import "Orbital Impact" "Orbital Impact":"General"
 
