@@ -58,8 +58,11 @@ module Hipmost
 
             members = [ sender.username, receiver.username ] .sort
 
-            Conversion.convert_formatting_to_markdown(message)
-            file.puts(%[{ "type": "direct_post", "direct_post": { "channel_members": #{members.inspect}, "user": "#{sender.username}", "message": #{JSON.dump(message)}, "create_at": #{create_at} } }])
+            messages = Conversion.convert_formatting_to_markdown_messages(message)
+
+            messages.each do |messagePart|
+              file.puts(%[{ "type": "direct_post", "direct_post": { "channel_members": #{members.inspect}, "user": "#{sender.username}", "message": #{JSON.dump(messagePart)}, "create_at": #{create_at} } }])
+            end
           end
 
           if verbose
