@@ -19,7 +19,7 @@ module Hipmost
                              .gsub("<", "-").gsub(">", "-")
                              .gsub("#", "")
                              .gsub("/", "-")
-                             .gsub(".", "-")
+                             .gsub(".", "-").gsub(",", "-")
                              .gsub("&", "-")
                              .gsub("'", "-")
                              .gsub(/[-]*$/, "")
