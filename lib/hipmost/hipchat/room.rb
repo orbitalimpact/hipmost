@@ -42,7 +42,7 @@ module Hipmost
       end
 
       def users
-        if not attrs["members"].first.is_a? Integer
+        if not attrs["members"].first.nil? and not attrs["members"].first.is_a? Integer
           @users ||= [ Hipchat.users[attrs["members"].first["id"]] ]
         else
           @users ||= attrs["members"].map{|uid| Hipchat.users[uid] }
