@@ -39,9 +39,9 @@ module Hipmost
         end
 
         result.each do |messagePart|
-          puts " convert_formatting_to_markdown_messages #{messagePart}"
+          #puts " convert_formatting_to_markdown_messages #{messagePart}"
           convert_formatting_to_markdown(messagePart)
-          puts " convert_formatting_to_markdown_messages #{messagePart}"
+          #puts " convert_formatting_to_markdown_messages #{messagePart}"
         end
       end
     end
@@ -51,7 +51,9 @@ module Hipmost
       currentLine = ""
 
       message.lines.each do |line|
+        #puts "Checking line #{line} with length #{line.length} so far #{currentLine.length}"
         if currentLine.length + line.length > maxLength
+          #puts "Splitting line"
           result.push prefix + "\n" + currentLine
           currentLine = line
         else
