@@ -25,24 +25,24 @@ module Hipmost
 
     def self.convert_formatting_to_markdown_messages(message)
       if message
-	if message.lines.count == 1
+        if message.lines.count == 1
           result = Array.new
-	  result.push message
-	end
-
-        if message.start_with?("/code")
-	  result = split_formatted_lines("/code", message.sub("/code", ""), 3500)
-        elsif message.start_with?("/quote")
-	  result = split_formatted_lines("/quote", message.sub("/quote", ""), 3500)
-	else
-	  result = split_formatted_lines("", message, 3500)
+          result.push message
         end
 
-	result.each do |messagePart|
+        if message.start_with?("/code")
+          result = split_formatted_lines("/code", message.sub("/code", ""), 3500)
+        elsif message.start_with?("/quote")
+          result = split_formatted_lines("/quote", message.sub("/quote", ""), 3500)
+        else
+          result = split_formatted_lines("", message, 3500)
+        end
+
+        result.each do |messagePart|
           puts " convert_formatting_to_markdown_messages #{messagePart}"
           convert_formatting_to_markdown(messagePart)
           puts " convert_formatting_to_markdown_messages #{messagePart}"
-	end
+        end
       end
     end
 
@@ -52,11 +52,11 @@ module Hipmost
 
       message.lines.each do |line|
         if currentLine.length + line.length > maxLength
-	  result.push prefix + "\n" + currentLine
-	  currentLine = line
-	else
+          result.push prefix + "\n" + currentLine
+          currentLine = line
+        else
           currentLine = currentLine + "\n" + line
-	end
+        end
       end
 
       result.push prefix + "\n" + currentLine
