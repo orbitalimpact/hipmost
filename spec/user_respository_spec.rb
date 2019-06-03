@@ -1,6 +1,6 @@
-require_relative '../lib/hipmost/user_repository'
+require_relative '../lib/hipmost/hipchat/user_repository'
 
-RSpec.describe Hipmost::UserRepository do
+RSpec.describe Hipmost::Hipchat::UserRepository do
   it "loads user data" do
     repo = described_class.new(".")
     repo.load(data)
@@ -8,7 +8,7 @@ RSpec.describe Hipmost::UserRepository do
     expect(repo.size).to eq(2)
 
     user = repo[564740]
-    expect(user).to be_a(Hipmost::UserRepository::User)
+    expect(user).to be_a(Hipmost::Hipchat::UserRepository::User)
     expect(user.name).to eq("Jeff Burns")
   end
 
