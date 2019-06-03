@@ -1,6 +1,6 @@
-require_relative '../lib/hipmost/room_repository'
+require_relative '../lib/hipmost/hipchat/room_repository'
 
-RSpec.describe Hipmost::RoomRepository do
+RSpec.describe Hipmost::Hipchat::RoomRepository do
   it "loads room data" do
     repo = described_class.new(".")
     repo.load(data)
@@ -8,9 +8,9 @@ RSpec.describe Hipmost::RoomRepository do
     expect(repo.size).to eq(2)
 
     room = repo[206455]
-    expect(room).to be_a(Hipmost::RoomRepository::Room)
+    expect(room).to be_a(Hipmost::Hipchat::Room)
 
-    room_by_name = repo.find_by_name(room.name)
+    room_by_name = repo.find_by_name(room.display_name)
     expect(room_by_name).to eq(room)
   end
 
