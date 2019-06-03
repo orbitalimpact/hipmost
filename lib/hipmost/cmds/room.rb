@@ -25,8 +25,12 @@ module Hipmost
 
       def list(_args)
         puts "Listing rooms..." if @verbose
-        Hipchat.rooms.each do |_,room|
-          puts room.display_name
+        unless Hipchat.rooms.empty?
+          Hipchat.rooms.each do |_,room|
+            puts room.display_name
+          end
+        else
+          puts "No rooms found"
         end
 
         true

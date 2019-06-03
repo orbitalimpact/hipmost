@@ -21,8 +21,12 @@ module Hipmost
 
       def list(_args)
         puts "Listing Private chats" if @verbose
-        Hipchat.direct_channels.each do |members|
-          puts members.inspect
+        unless Hipchat.direct_channels.empty?
+          Hipchat.direct_channels.each do |members|
+            puts members.inspect
+          end
+        else
+          puts "No private chats found"
         end
 
         true
