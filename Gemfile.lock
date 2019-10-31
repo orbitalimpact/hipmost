@@ -31,7 +31,7 @@ GEM
       rspec-support (~> 3.7.0)
     rspec-support (3.7.1)
     slop (3.6.0)
-    yard (0.9.15)
+    yard (0.9.20)
 
 PLATFORMS
   ruby
