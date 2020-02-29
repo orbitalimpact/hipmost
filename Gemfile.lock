@@ -16,7 +16,7 @@ GEM
     pry-doc (0.12.0)
       pry (~> 0.9)
       yard (~> 0.9)
-    rake (10.5.0)
+    rake (13.0.1)
     rspec (3.7.0)
       rspec-core (~> 3.7.0)
       rspec-expectations (~> 3.7.0)
@@ -42,7 +42,7 @@ DEPENDENCIES
   method_source (>= 0.8.2)
   pry (~> 0.10.3)
   pry-doc (>= 0.8.0)
-  rake (~> 10.0)
+  rake (~> 13.0)
   rspec (~> 3.0)
 
 BUNDLED WITH
