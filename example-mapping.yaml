@@ -1,0 +1,88 @@
+# example-mapping.yaml
+#
+# Approved mapping for hipmost import commands.
+# Run `ruby hipmost.rb audit EXPORT_PATH` first to generate hipmost-audit.yaml,
+# then use it as research to fill in this file.
+#
+# Target format: team-name:channel-name
+# Both are internal names (lowercase, hyphens), not display names.
+
+users:
+  # action: map — HC user already exists in MM, match by email or username
+  - hc: john
+    hc_id: 10001
+    mm: john           # MM username (can omit if same as hc)
+    email: john@example.com
+    action: map
+
+  - hc: jane
+    hc_id: 10002
+    mm: jane.smith     # different username in MM
+    email: jane@example.com
+    action: map
+
+  # action: create — user doesn't exist in MM yet; mmctl will create them
+  - hc: contractor1
+    hc_id: 10003
+    mm: contractor1
+    email: contractor1@example.com
+    action: create
+
+  # action: skip — don't import messages from this user (left company, bot, etc.)
+  - hc: former-employee
+    hc_id: 10099
+    action: skip
+
+
+# Rooms that exist in MM and have already been imported (or should be left alone).
+# Listed here to document the decision; not imported.
+rooms_skip:
+  - hc_name: Watercooler
+    hc_id: 2001
+    target: myteam:watercooler
+
+
+# Rooms that exist in MM but need HC messages merged in.
+# Existing posts are loaded first; exact-timestamp duplicates are skipped.
+rooms_merge:
+  - hc_name: Engineering
+    hc_id: 2010
+    target: myteam:engineering
+    display_name: Engineering
+    type: O            # O=public, P=private
+
+  - hc_name: Marketing
+    hc_id: 2011
+    target: myteam:marketing
+    display_name: Marketing
+    type: O
+
+  - hc_name: Ops
+    hc_id: 2012
+    target: myteam:ops
+    display_name: Ops
+    type: P
+
+
+# Rooms that don't exist in MM yet. mmctl creates them during import.
+rooms_new:
+  - hc_name: Archive - 2019 Product Launch
+    hc_id: 3001
+    target: myteam:archive-2019-product-launch
+    display_name: Archive - 2019 Product Launch
+    type: P
+    members:           # optional: add these MM users to the channel after import
+      - john
+      - jane
+
+  - hc_name: Archive - Q4 Planning
+    hc_id: 3002
+    target: myteam:archive-q4-planning
+    display_name: Archive - Q4 Planning
+    type: P
+
+
+dms:
+  # Set to 'yes' to import direct messages.
+  # Use import_dm for individual pairs, or set yes here for bulk generate.
+  import_dms: no

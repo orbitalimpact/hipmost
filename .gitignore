@@ -1,13 +1,5 @@
-/.bundle/
-/.yardoc
-/_yardoc/
-/coverage/
-/doc/
-/pkg/
-/spec/reports/
+*.zip
+*.jsonl
+hipmost-audit.yaml
+hipmost-output/
 /tmp/
-
-# rspec failure tracking
-.rspec_status
-data
-data.jsonl
