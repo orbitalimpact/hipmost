@@ -1,74 +1,195 @@
-# Hipmost
+# hipmost
 
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=AYNCCNVFYPKXW)
+Migrate HipChat exports to Mattermost. Audit first, import one room at a time, verify each one before moving on.
 
-Hipmost is a tool to migrate your Hipchat history to Mattermost. It parses your Hipchat export and generates a file to be imported on a Mattermost server. After generating this file, please see [the Mattermost documentation](https://docs.mattermost.com/deployment/bulk-loading.html) for how to import it on your server.
+## Why not migratemost or varna?
 
-## Installation
+| Feature | hipmost | migratemost | varna |
+|---|---|---|---|
+| Language | Ruby | Python 2 | Python 2 |
+| Audit phase | yes — shows what would happen before touching anything | no | no |
+| Collision detection | yes — skips exact-timestamp duplicates on merge | no | no |
+| Per-room atomic import | yes — generate + import + verify in one command | no | no |
+| Mapping review workflow | yes — audit writes YAML you edit and approve | no | no |
+| Emoji conversion | yes — HipChat shortcodes to MM shortcodes | partial | no |
+| Attachment validation | yes — size check, path resolution, re-import command | no | no |
+| Message splitting | yes — splits at word boundary, preserves timestamps | no | no |
+| Long message handling | truncates cleanly | unknown | silently drops |
 
-    $ gem install hipmost
+Not claiming perfection. If you have a small HipChat export and don't care about any of the above, any tool will work.
 
-## Getting started
+## Prerequisites
 
-See [HOWTO.md](./HOWTO.md) for a step-by-step guide for the entire process. It covers everything from how to get your data from Hipchat, and finally, how to get that data into Mattermost.
+- Ruby 3.x
+- `pg` gem (`gem install pg`)
+- PostgreSQL read access to your Mattermost database
+- `mmctl` at `/opt/mattermost/bin/mmctl` for the import commands
+- `zip` in PATH
 
-## Usage
+## Setup
 
-    Usage: hipmost [options] [command]
+Create `~/.hipmost-env`:
 
-    Commands:
+```sh
+export HIPMOST_DB_URL=postgres://mattermost:yourpassword@localhost/mattermost
+```
 
-    public (AKA: `room' or `rooms')
-    Form: public [import|list] [room names] - Import or list public Hipchat rooms
+The script also checks `~/.mm-search-env` and the `MATTERMOST_DB_URL` env var as fallbacks.
 
-    [room names] must be at least one pair composed by "Hipchat room name" and "Mattermost team":"Mattermost channel".
-    The Mattermost team or channel can be the part visible in the URL path, such as "town-square", or it can be the plain-English name, such as "General"
+## Workflow
 
-    --------
+### 1. Audit the export
 
-    private (AKA: `direct')
-    Form: private [import|list]  - Import or list private chats
+```sh
+ruby hipmost.rb audit /path/to/hipchat-export
+```
 
-    --------
+This reads the export, queries your Mattermost DB, and writes `hipmost-audit.yaml`. It shows:
 
-    users
-    Form: users - Exports the list of users to Users.jsonl This helps fix user not found errors during import.  This is especially important if your users are no always members of the rooms.
-    
-    --------
+- Which HC users matched MM users (by email, then username)
+- Which HC rooms matched MM channels (fuzzy name match)
+- Suggested action for each: `skip` / `merge` / `new`
+- DM inventory per user
 
-    Examples:
-    $ hipmost room import "Orbital Impact" "Orbital Impact":"General"
-    $ hipmost public import "Orbital Impact" "Orbital Impact":"General" -p data_folder
-    $ hipmost private list      # List all private chat rooms
-    $ hipmost private import    # Import all private chats
-    $ hipmost users
-    $ hipmost -v rooms import "Orbital Impact" "Orbital Impact":"General"
+Open `hipmost-audit.yaml` and review. The audit output is not your import mapping — it's your research. You'll build a separate `mapping.yaml` from it (see format below).
 
-    -p, --path [PATH]     Path to Hipchat data folder (Default: "./data")
-    -v, --[no-]verbose    Run verbosely
+### 2. Build your mapping
 
-## Generating Commands
-The file Commands.ods can be used to generate your import commands.
+Convert the audit output into a `mapping.yaml`. The audit YAML uses a flat structure; the import commands expect the structured format described in the Mapping Format section. This is intentional — the review step forces you to make deliberate decisions per room rather than bulk-approving.
 
+### 3. Import one room at a time
 
-## Known Bugs
-See the [KNOWN-BUGS.md](./KNOWN-BUGS.md) file for discussion of known problems, workarounds, and potential improvements. This is also a good place to start if you're interested in contributing.
+```sh
+ruby hipmost.rb import_one /path/to/hipchat-export --map mapping.yaml --room 'Engineering'
+```
 
-## Contributing
+This command:
+1. Generates JSONL for that one room
+2. Packages it as a zip
+3. Calls `mmctl import process`
+4. Polls the import job until done
+5. Verifies post count and samples a few messages
+6. Exits nonzero if verification fails
 
-Bug reports and pull requests are welcome. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Ruby code of conduct.](https://www.ruby-lang.org/en/conduct/)
+For merge targets (room already exists in MM), it loads existing timestamps first and skips exact duplicates.
 
-Also, [here is a great reference for Hipchat's data format](https://confluence.atlassian.com/hipchatkb/exporting-from-hipchat-server-or-data-center-for-data-portability-950821555.html) and [here is a great reference for how Mattermost's data format.](https://docs.mattermost.com/deployment/bulk-loading.html#data-format) These are highly useful for aspiring contributors.
+### 4. Import DMs
+
+```sh
+ruby hipmost.rb import_dm /path/to/hipchat-export --map mapping.yaml --pair 'alice,bob'
+```
+
+Same pattern: generate, import, verify. DM channel is created if it doesn't exist.
+
+### 5. Fix attachments (if needed)
+
+```sh
+ruby hipmost.rb fix_attachments /path/to/hipchat-export --map mapping.yaml
+ruby hipmost.rb fix_attachments /path/to/hipchat-export --map mapping.yaml --room 'Engineering'
+```
+
+Re-imports only the attachment-bearing posts. Mattermost matches posts by `channel + create_at` and attaches the files to the existing posts. Run this after `import_one` if attachments were missing.
+
+### 6. Bulk generate + import (alternative)
+
+If you'd rather generate everything at once and import with a single `mmctl` call:
+
+```sh
+ruby hipmost.rb generate /path/to/hipchat-export --map mapping.yaml
+ruby hipmost.rb generate /path/to/hipchat-export --map mapping.yaml --dry-run  # preview counts
+ruby hipmost.rb import hipmost-output.zip
+```
+
+The bulk path does less verification than `import_one`. Good for a final full-run after you've tested individual rooms.
+
+## Mapping Format
+
+The import commands (`import_one`, `import_dm`, `fix_attachments`) use a structured mapping, not the raw audit YAML.
+
+```yaml
+users:
+  - hc: alice           # HipChat mention_name
+    hc_id: 12345        # from audit YAML
+    mm: alice           # Mattermost username (omit if same as hc)
+    email: alice@example.com
+    action: map         # map | create | skip
+
+  - hc: bob
+    hc_id: 12346
+    mm: bob.smith       # different MM username
+    email: bob@example.com
+    action: map
+
+  - hc: former-employee
+    hc_id: 99999
+    action: skip        # skip: messages from this user are dropped
+
+rooms_skip:
+  - hc_name: Watercooler
+    hc_id: 1001
+    target: myteam:watercooler   # team:channel-name (MM channel to skip importing into)
+
+rooms_merge:
+  - hc_name: Engineering
+    hc_id: 2001
+    target: myteam:engineering
+    display_name: Engineering
+    type: O              # O=public, P=private
+
+  - hc_name: Infrastructure
+    hc_id: 2002
+    target: myteam:infrastructure
+    display_name: Infrastructure
+    type: P
+
+rooms_new:
+  - hc_name: Old Project
+    hc_id: 3001
+    target: myteam:old-project
+    display_name: Old Project
+    type: P
+    members:             # optional: add these MM users after import
+      - alice
+      - bob
+
+dms:
+  import_dms: yes        # yes | no
+```
+
+Field notes:
+
+- `target` format is `team-name:channel-name` where both are the internal names (lowercase, hyphens), not display names
+- `action: create` in users means the user doesn't exist in MM yet; hipmost emits a user record and mmctl creates them
+- `type` for rooms: `O` is public (open), `P` is private
+- `rooms_skip` entries are listed but not imported — useful to document your decisions
+
+## How it works
+
+The audit-first approach exists because HipChat exports are messy. Rooms get renamed, users change usernames, some content was already imported via other paths. Going in blind overwrites things.
+
+The flow:
+
+1. `audit` reads the HC export and queries MM, producing a YAML snapshot of the current state with suggested actions
+2. You review and edit that into a `mapping.yaml` — explicit decisions about every room and user
+3. `import_one` generates JSONL for exactly one room, imports it, and verifies the result before you proceed to the next
+
+The JSONL format is Mattermost's bulk import format. `mmctl import process` handles the actual write to Mattermost. hipmost doesn't touch the database directly — it only reads.
+
+For merge targets, hipmost loads all existing post timestamps before generating JSONL and skips any HC message whose timestamp exactly matches an existing post. This handles the common case where a partial import was run before.
+
+Messages longer than 16,383 characters (Mattermost's limit) are split at word boundaries. Each chunk gets a `create_at` offset of 1ms to preserve ordering.
+
+Attachments over 50MB are skipped (MM default file size limit). If your MM instance has a different limit, change `MM_MAX_FILE` at the top of the script.
+
+## Limitations
+
+- The fuzzy room matching in `audit` works well for rooms that weren't renamed much. If you renamed rooms significantly between HC and MM, you'll need to set targets manually in your mapping.
+- DMs from guest accounts are skipped.
+- HipChat `/topic` and `/emoticon` messages are not converted.
+- No support for HipChat integrations or bot messages.
 
 ## License
 
-The gem is available as open source under the terms of the [MIT License.](https://opensource.org/licenses/MIT)
+MIT. See LICENSE.txt.
 
-## Code of Conduct
-
-Everyone interacting in the Hipmost project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct.](./CODE_OF_CONDUCT.md)
-
-## Donation
-If this project has helped you or your team, a donation would be appreciated and will help keep the project alive :)
-
-[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=AYNCCNVFYPKXW)
+PRs welcome.
