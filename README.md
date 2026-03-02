@@ -189,6 +189,6 @@ Attachments over 50MB are skipped (MM default file size limit). If your MM insta
 
 ## License
 
-MIT. See LICENSE.txt.
+AGPL-3.0. See LICENSE.txt.
 
 PRs welcome.
