@@ -13,8 +13,7 @@ Migrate HipChat exports to Mattermost. Audit first, import one room at a time, v
 | Mapping review workflow | yes — audit writes YAML you edit and approve | no | no |
 | Emoji conversion | yes — HipChat shortcodes to MM shortcodes | partial | no |
 | Attachment validation | yes — size check, path resolution, re-import command | no | no |
-| Message splitting | yes — splits at word boundary, preserves timestamps | no | no |
-| Long message handling | truncates cleanly | unknown | silently drops |
+| Message splitting | yes — splits at word boundary, preserves timestamps | no | silently drops |
 
 Not claiming perfection. If you have a small HipChat export and don't care about any of the above, any tool will work.
 
