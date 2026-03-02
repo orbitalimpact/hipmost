@@ -15,7 +15,7 @@ Migrate HipChat exports to Mattermost. Audit first, import one room at a time, v
 | Attachment validation | yes — size check, path resolution, re-import command | no | no |
 | Message splitting | yes — splits at word boundary, preserves timestamps | no | silently drops |
 
-Not claiming perfection. If you have a small HipChat export and don't care about any of the above, any tool will work.
+Not claiming perfection. If you have a small HipChat export and don't care about any of the above, any tool will work. This project has managed to import nearly a million messages successfully, so hopefully this helps with legacy projects you might still have floating around since, if you're like some of us, the original import was a bit tedious and you might have not gotten but a fraction into your Mattermost system. Hopefully now with this you'll be able to finish those long-overdue shelved projects.
 
 ## Prerequisites
 
